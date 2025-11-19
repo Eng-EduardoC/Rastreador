@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Porta alta (evita problemas de bind no Windows)
-ENV SERVER_PORT=50000
+ENV SERVER_PORT=8090
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ WORKDIR /app
 COPY . /app
 
 # Expor a porta para debug/ligações
-EXPOSE 50000
+EXPOSE 8090
 
 # Mostrar logs sem buffer (muito importante!)
 ENV PYTHONUNBUFFERED=1
