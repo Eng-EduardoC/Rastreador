@@ -107,3 +107,6 @@ while True:
 
     conn.close()
     print("🔌 Cliente desconectado.\n")
+
+    #tetsete
+    
