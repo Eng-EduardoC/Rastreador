@@ -89,51 +89,53 @@ def format_packet(raw):
     try:
         data = raw.strip("#").split(",")
 
-        imei = data[1]
-        hora = data[3]
-        status_gps = data[4]
+        # Campos do protocolo GT06
         lat_raw = data[5]
         lat_dir = data[6]
         lon_raw = data[7]
         lon_dir = data[8]
-        velocidade = data[9]
-        direcao = data[10]
-        data_raw = data[11]
 
         # Converter coordenadas
         lat = convert_coord(lat_raw, lat_dir)
         lon = convert_coord(lon_raw, lon_dir)
 
-        # Formatando data/hora
-        hora_fmt = f"{hora[0:2]}:{hora[2:4]}:{hora[4:6]}"
-        dia = data_raw[0:2]
-        mes = data_raw[2:4]
-        ano = "20" + data_raw[4:6]
-        data_fmt = f"{dia}/{mes}/{ano}"
+        # ==== CÁLCULO DE DISTÂNCIA PARA CADA PONTO ====
+        distancias_texto = "\nDistâncias aos pontos:\n"
+        for ponto in PONTOS:
+            nome = ponto["nome"]
+            plat = ponto["lat"]
+            plon = ponto["lon"]
 
-        # Log bonito
+            dist = distancia_metros(lat, lon, plat, plon)
+            distancias_texto += f"- {nome}: {dist:.1f} metros\n"
+
+        # ==== MENSAGEM QUANDO ENTRA NO RAIO ====
+        for ponto in PONTOS:
+            nome = ponto["nome"]
+            plat = ponto["lat"]
+            plon = ponto["lon"]
+            raio = ponto["raio_metros"]
+
+            dist = distancia_metros(lat, lon, plat, plon)
+
+            if dist <= raio:
+                print(f"\n🚩 PASSOU PELO PONTO: {nome} (distância: {dist:.1f} m)\n")
+
+        # ==== LOG LIMPO ====
         log = (
-            "\n====== 📡 PACOTE GT06 RECEBIDO ======\n"
-            f"IMEI: {imei}\n"
-            f"Data/Hora: {data_fmt} {hora_fmt}\n"
-            f"Latitude: {lat:.6f}\n"
+            "\n====== 📍 LOCALIZAÇÃO RECEBIDA ======\n"
+            f"Latitude:  {lat:.6f}\n"
             f"Longitude: {lon:.6f}\n\n"
             "🔗 Google Maps:\n"
-            f"{lat:.6f}, {lon:.6f}\n"
-            f"https://www.google.com/maps?q={lat:.6f},{lon:.6f}\n\n"
-            "--------------------------------------\n"
-            f"RAW: {raw}\n"
-            "======================================\n"
+            f"https://www.google.com/maps?q={lat:.6f},{lon:.6f}\n"
+            f"{distancias_texto}"
+            "=====================================\n"
         )
-
-        # Chama verificação dos pontos geográficos
-        verificar_pontos(lat, lon)
 
         return log
 
     except Exception as e:
         return f"\n[ERRO AO FORMATAR PACOTE] {e}\nRAW={raw}\n"
-
 
 
 # ============================================================
