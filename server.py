@@ -1,7 +1,7 @@
 import socket
 
 HOST = "0.0.0.0"   # escuta em todas interfaces
-PORT = 5015        # porta que o rastreador vai enviar
+PORT = 8090        # porta que o rastreador vai enviar
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))

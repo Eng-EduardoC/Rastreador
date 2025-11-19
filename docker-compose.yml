@@ -6,4 +6,4 @@ services:
     container_name: gps_server
     restart: always
     ports:
-      - "5089:5089"   # expõe a porta para o rastreador se conectar
+      - "8090:8090"   # expõe a porta para o rastreador se conectar
