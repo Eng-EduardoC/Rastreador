@@ -8,20 +8,31 @@ print(f"📡 Aguardando conexões na porta {PORT}...\n")
 
 def convert_coord(coord, direction):
     """
-    Converte coordenada do formato GT06 (DDMM.MMMM) para decimal.
+    Converte coordenadas GT06 para decimal.
+    Latitude: DDMM.MMMM
+    Longitude: DDDMM.MMMM
     """
+
     if not coord or coord == "0":
         return 0.0
 
-    degrees = int(coord[:2])
-    minutes = float(coord[2:])
+    # LATITUDE (coord no formato DDMM.MMMM → primeiros 2 dígitos)
+    if len(coord.split('.')[0]) == 4:  
+        degrees = int(coord[:2])
+        minutes = float(coord[2:])
+    else:
+        # LONGITUDE (coord no formato DDDMM.MMMM → primeiros 3 dígitos)
+        degrees = int(coord[:3])
+        minutes = float(coord[3:])
 
     decimal = degrees + minutes / 60
 
+    # Inverte para hemisfério Sul ou Oeste
     if direction in ["S", "W"]:
         decimal = -decimal
 
     return decimal
+
 
 
 def format_packet(raw):
