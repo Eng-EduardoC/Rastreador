@@ -61,9 +61,11 @@ def format_packet(raw):
             f"Data/Hora: {data_fmt} {hora_fmt}\n"
             f"Latitude: {lat:.6f}\n"
             f"Longitude: {lon:.6f}\n"
-            "\n🔗 Google Maps (cópia-e-cola):\n"
-            f"{lat:.6f}, {lon:.6f}\n"
-            f"https://www.google.com/maps?q={lat:.6f},{lon:.6f}\n"
+            f"Velocidade: {velocidade} km/h\n"
+            f"Direção: {direcao}°\n"
+            f"Status GPS: {status_gps}\n"
+            "--------------------------------------\n"
+            f"RAW: {raw}\n"
             "======================================\n"
         )
 
