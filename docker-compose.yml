@@ -1,9 +1,7 @@
-version: '3.9'
-
 services:
   gps_server:
     build: .
     container_name: gps_server
     restart: always
     ports:
-      - "8090:8090"   # expõe a porta para o rastreador se conectar
+      - "50000:50000"   # expõe a porta para o rastreador se conectar

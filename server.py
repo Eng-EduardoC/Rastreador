@@ -1,13 +1,14 @@
 import socket
 
-HOST = "0.0.0.0"   # escuta em todas interfaces
-PORT = 8090        # porta que o rastreador vai enviar
+HOST = "0.0.0.0"
+PORT = 8090
+
+print("Iniciando servidor TCP...")
+print(f"Escutando na porta {PORT}...")
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
 server.listen()
-
-print(f"Servidor ouvindo na porta {PORT}...")
 
 while True:
     conn, addr = server.accept()
@@ -17,10 +18,6 @@ while True:
         data = conn.recv(1024)
         if not data:
             break
-        try:
-            print("Dados recebidos:", data.decode(errors="ignore"))
-        except:
-            print("Erro ao decodificar pacote")
-    
-    conn.close()
+        print("Dados recebidos:", data.decode(errors="ignore"))
 
+    conn.close()
