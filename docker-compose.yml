@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  gps_server:
+    build: .
+    container_name: gps_server
+    restart: always
+    ports:
+      - "5089:5089"   # expõe a porta para o rastreador se conectar
