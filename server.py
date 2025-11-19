@@ -23,3 +23,4 @@ while True:
             print("Erro ao decodificar pacote")
     
     conn.close()
+
