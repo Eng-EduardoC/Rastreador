@@ -1,0 +1,14 @@
+[
+    {
+        "nome": "Americanas",
+        "lat": -28.291737,
+        "lon": -53.500807,
+        "raio_metros": 10
+    },
+    {
+        "nome": "Esquina Panvel",
+        "lat": -28.292245,
+        "lon": -53.500063,
+        "raio_metros": 10
+    }
+]
